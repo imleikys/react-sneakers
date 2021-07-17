@@ -1,1 +1,1 @@
-# Simple sneakers shop
+# Simple sneakers shop on ReactJS
