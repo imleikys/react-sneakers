@@ -1,0 +1,35 @@
+.cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 355px;
+  border: 2px solid #EBEBEB;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  &-img {
+    margin-right: 20px;
+  }
+
+  &-text {
+    max-width: 200px;
+
+    &__title {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      margin-bottom: 5px;
+    }
+
+    &__price {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+  
+  &-button {
+    cursor: pointer;
+  }
+}
