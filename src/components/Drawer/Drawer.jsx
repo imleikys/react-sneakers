@@ -18,7 +18,7 @@ export const Drawer = (props) => {
         {
           props.items.map((cart, index) => {
             return (
-              <DrawerCard name={cart.name} img={cart.img} price={cart.price} key={index}/>
+              <DrawerCard name={cart.name} img={cart.img} price={cart.price} key={index} removeItem={props.removeItem} id={cart.id}/>
             )
           })
         }

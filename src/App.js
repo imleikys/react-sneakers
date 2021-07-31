@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import axios from "axios";
 import {Header} from "./components/Header/Header";
 import {Card} from "./components/Card/Card";
 import {Drawer} from "./components/Drawer/Drawer";
@@ -9,41 +10,49 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false);
   const [cartSneakers, setCartSneakers] = useState([]);
   const [sneakers, setSneakers] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    fetch('https://610002adbca46600171cf698.mockapi.io/items')
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setSneakers(json);
-      });
+      axios.get('https://610002adbca46600171cf698.mockapi.io/items').then((response) => setSneakers(response.data))
+      axios.get('https://610002adbca46600171cf698.mockapi.io/cards').then((response) => setCartSneakers(response.data));
   }, [])
 
   const onAddToCart = (sneaker) => {
+    axios.post('https://610002adbca46600171cf698.mockapi.io/cards', sneaker);
     setCartSneakers((prev) => [...prev, sneaker]);
+  }
+
+  const searchHandler = (event) => {
+    setSearchValue(event.target.value);
+  }
+
+  const removeItem = (id) => {
+    axios.delete(`https://610002adbca46600171cf698.mockapi.io/cards/${id}`);
+    setCartSneakers((prev) => prev.filter((item) => item.id !== id));
   }
 
   return (
     <div className="wrapper">
       { 
-        cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} /> : null 
+        cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
       }
       <Header onClickCart={() => setCartOpened(true)} />
       <div className="content">
         <div className="content-header">
-          <h1 className="content-title">Все Кроссовки</h1>
+          <h1 className="content-title">{searchValue ? `Поиск по запросу: ${searchValue}` : 'Все Кроссовки'}</h1>
           <div className="content-search">
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." />
+            <input onChange={searchHandler} placeholder="Поиск..." value={searchValue}/>
           </div>
         </div>
 
         <div className="content-cards">
           {
-            sneakers.map((sneaker, index) => {
+            sneakers
+              .filter((sneaker) => sneaker.name.toLowerCase().includes(searchValue.toLowerCase()))
+              .map((sneaker, index) => {
               return (
-                <Card name={sneaker.name} img={sneaker.img} price={sneaker.price} key={index} onAdd={(sneaker) => onAddToCart(sneaker)}/> 
+                <Card name={sneaker.name} img={sneaker.img} price={sneaker.price} key={index} cartSneakers={cartSneakers} onAdd={(sneaker) => onAddToCart(sneaker)}/> 
               )
             })
           }
