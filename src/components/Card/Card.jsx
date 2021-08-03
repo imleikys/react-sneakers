@@ -5,7 +5,6 @@ import './Card.scss';
 export const Card = ({name, img, price, onClick, onAdd}) => {
   
   const [isAdded, setIsAdded] = useState(false);
-  const pathForImg = `img/${img}.jpg`;
 
   const addHandler = () => {
     onAdd({name, img, price});
@@ -16,7 +15,7 @@ export const Card = ({name, img, price, onClick, onAdd}) => {
     <div className="card">
       <div className="card-img">
         <img className="favorite" src="/img/like.svg" alt="like" onClick={onClick} />
-        <img width={133} height={112} src={pathForImg} alt="Sneakers"/>
+        <img width={133} height={112} src={`img/${img}.jpg`} alt="Sneakers"/>
       </div>
       <div className="card-text">
         <p className="card-text__title">{name}</p>

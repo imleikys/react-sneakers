@@ -3,6 +3,7 @@ import axios from "axios";
 import {Header} from "./components/Header/Header";
 import {Card} from "./components/Card/Card";
 import {Drawer} from "./components/Drawer/Drawer";
+import {Switch, Route} from "react-router";
 
 
 function App() {
@@ -32,7 +33,15 @@ function App() {
   }
 
   return (
+
     <div className="wrapper">
+
+      <Switch>
+        <Route path="/" exact/>
+        <Route path="/favorites" exact />
+      </Switch>
+  
+
       { 
         cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
       }
