@@ -13,6 +13,18 @@
     &__img {
       margin-right: 15px;
     }
+
+    &__text {
+      text-decoration: none;
+      
+      h3 {
+        color: #000;
+      }
+
+      p {
+        color: #9D9D9D;
+      }
+    }
   }
 
   &-buttons {

@@ -1,5 +1,5 @@
 import React from "react";
-import { DrawerCard } from "../DrawerCard/DrawerCard";
+import { DrawerCard } from "../DrawerCard/DrawerCard.jsx";
 import "./Drawer.scss";
 
 export const Drawer = (props) => {

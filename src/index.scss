@@ -26,38 +26,3 @@ code {
   max-width: 1200px;
   margin: 50px auto;
 }
-
-.content { 
-  margin: 35px;
-  
-  &-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 30px;
-  }
-
-  &-search {
-    border: 2px solid #C5C1C1;
-    border-radius: 10px;
-    padding: 0 15px;
-  
-    input {
-      border: 0;
-      padding: 13px;
-      font-size: 16px;
-      width: 200px;
-      outline: none;
-      
-    }
-  }
-
-  &-cards { 
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0 auto;
-  }
-}
