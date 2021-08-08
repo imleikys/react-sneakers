@@ -2,7 +2,7 @@ import {Card} from "../../components/Card/Card";
 import './Main.scss';
 
 export const Main = (props) => {
-
+  
   return (
     <div className="content">
       <div className="content-header">
@@ -33,6 +33,7 @@ export const Main = (props) => {
                 cartSneakers={props.cartSneakers}
                 onAdd={(sneaker) => props.onAddToCart(sneaker)}
                 onFavorite={(sneaker) => props.onAddFavorite(sneaker)}
+                added={(item) => props.cartSneakers.some(((item) => Number(item.id) === Number(sneaker.id)))}
                 {...sneaker}
               />
             );

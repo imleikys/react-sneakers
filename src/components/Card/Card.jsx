@@ -2,9 +2,9 @@ import {useState} from 'react';
 import './Card.scss';
 
 
-export const Card = ({id, name, img, price, onAdd, onFavorite, favorited = false}) => {
+export const Card = ({id, name, img, price, onAdd, onFavorite, favorited = false, added = false}) => {
   
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState(added);
   const [isFavorite, setIsFavorite] = useState(favorited);
 
   const addHandler = () => {
