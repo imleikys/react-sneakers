@@ -1,8 +1,12 @@
+import React from "react";
 import {Card} from "../../components/Card/Card";
+import AppContext from "../../context";
 import './Favorites.scss';
 
 
 export const Favorites = (props) => {
+
+  const state = React.useContext(AppContext);
 
   return (
     <div className="content">
@@ -11,7 +15,7 @@ export const Favorites = (props) => {
         </div>
 
         <div className="content-cards">
-        {props.favorites
+        {state.favorites
           .map((sneaker, index) => {
             return (
               <Card

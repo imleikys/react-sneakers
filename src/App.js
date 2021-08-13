@@ -3,8 +3,9 @@ import axios from "axios";
 import {Header} from "./components/Header/Header";
 import {Drawer} from "./components/Drawer/Drawer";
 import {Switch, Route} from "react-router";
-import { Main } from "./pages/Main/Main";
+import {Main} from "./pages/Main/Main";
 import {Favorites} from "./pages/Favorites/Favorites";
+import AppContext from '../src/context';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [sneakers, setSneakers] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [favorites, setFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,6 +26,8 @@ function App() {
       setCartSneakers(cardResponse.data);
       setFavorites(favoritesResponse.data)
       setSneakers(sneakersResponse.data);
+
+      setIsLoading(false);
     }
 
     fetchData();
@@ -68,28 +72,31 @@ function App() {
 
   return (
 
-    <div className="wrapper">
-      { 
-        cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
-      }
-      <Header onClickCart={() => setCartOpened(true)} />
-      
-      <Switch>
-        <Route path='/' exact>
-          <Main 
-            searchValue={searchValue}
-            searchHandler={searchHandler}
-            cartSneakers={cartSneakers}
-            sneakers={sneakers}
-            onAddToCart={onAddToCart}
-            onAddFavorite={onAddFavorite}
-          />
-        </Route>
-        <Route path='/favorites'>
-            <Favorites favorites={favorites} onFavorite={onAddFavorite}/>
-        </Route>
-      </Switch>
-    </div>
+    <AppContext.Provider value={{favorites, sneakers, cartSneakers}}>
+      <div className="wrapper">
+        { 
+          cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
+        }
+        <Header onClickCart={() => setCartOpened(true)} />
+        
+        <Switch>
+          <Route path='/' exact>
+            <Main 
+              searchValue={searchValue}
+              searchHandler={searchHandler}
+              cartSneakers={cartSneakers}
+              sneakers={sneakers}
+              onAddToCart={onAddToCart}
+              onAddFavorite={onAddFavorite}
+              isLoading={isLoading}
+            />
+          </Route>
+          <Route path='/favorites'>
+              <Favorites favorites={favorites} onFavorite={onAddFavorite}/>
+          </Route>
+        </Switch>
+      </div>
+    </AppContext.Provider>
   );
 }
 
