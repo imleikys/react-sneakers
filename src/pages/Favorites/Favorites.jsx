@@ -20,7 +20,6 @@ export const Favorites = (props) => {
             return (
               <Card
                 key={index}
-                onFavorite={(sneaker) => props.onFavorite(sneaker)}
                 favorited={true}
                 {...sneaker}
               />

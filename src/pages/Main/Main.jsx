@@ -16,12 +16,6 @@ export const Main = (props) => {
             key={index}
             cartSneakers={props.cartSneakers}
             onAdd={(sneaker) => props.onAddToCart(sneaker)}
-            onFavorite={(sneaker) => props.onAddFavorite(sneaker)}
-            added={() =>
-              props.cartSneakers.some(
-                (item) => Number(item.id) === Number(sneaker.id)
-              )
-            }
             loading={props.isLoading}
             {...sneaker}
           />

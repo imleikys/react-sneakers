@@ -70,9 +70,17 @@ function App() {
     }
   }
 
+  const isItemAdded = (id) => {
+    return cartSneakers.some((item) => Number(item.id) === Number(id))
+  }
+
+  const isItemFavorited = (id) => {
+    return favorites.some((item) => Number(item.id) === Number(id));
+  }
+
   return (
 
-    <AppContext.Provider value={{favorites, sneakers, cartSneakers}}>
+    <AppContext.Provider value={{favorites, sneakers, cartSneakers, isItemAdded, onAddFavorite, isItemFavorited}}>
       <div className="wrapper">
         { 
           cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
@@ -92,7 +100,7 @@ function App() {
             />
           </Route>
           <Route path='/favorites'>
-              <Favorites favorites={favorites} onFavorite={onAddFavorite}/>
+              <Favorites favorites={favorites}/>
           </Route>
         </Switch>
       </div>

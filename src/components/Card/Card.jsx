@@ -1,6 +1,8 @@
-import { useState } from "react";
+import {useContext} from "react";
 import ContentLoader from "react-content-loader"
+import AppContext from "../../context";
 import "./Card.scss";
+
 
 export const Card = ({
   id,
@@ -8,23 +10,17 @@ export const Card = ({
   img,
   price,
   onAdd,
-  onFavorite,
-  favorited = false,
-  added = false,
   loading,
 }) => {
   
-  const [isAdded, setIsAdded] = useState(added);
-  const [isFavorite, setIsFavorite] = useState(favorited);
+  const {isItemAdded, onAddFavorite, isItemFavorited} = useContext(AppContext);
 
   const addHandler = () => {
     onAdd({ id, name, img, price });
-    setIsAdded(!isAdded);
   };
 
   const favoriteHandler = () => {
-    onFavorite({ id, name, img, price });
-    setIsFavorite(!isFavorite);
+    onAddFavorite({ id, name, img, price });
   };
 
   return (
@@ -50,7 +46,7 @@ export const Card = ({
           <div className="card-img">
             <img
               className="favorite"
-              src={isFavorite ? "img/like.svg" : "img/favorite-unlike.svg"}
+              src={isItemFavorited(id) ? "img/like.svg" : "img/favorite-unlike.svg"}
               alt="like"
               onClick={favoriteHandler}
             />
@@ -72,7 +68,7 @@ export const Card = ({
               </div>
               <div className="card-text__descr-button">
                 <img
-                  src={isAdded ? "img/add-active.svg" : "img/add.svg"}
+                  src={isItemAdded(id) ? "img/add-active.svg" : "img/add.svg"}
                   alt="add"
                   onClick={addHandler}
                 />
