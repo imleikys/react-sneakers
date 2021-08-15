@@ -9,18 +9,18 @@ export const Card = ({
   name,
   img,
   price,
-  onAdd,
   loading,
+  itemid,
 }) => {
   
-  const {isItemAdded, onAddFavorite, isItemFavorited} = useContext(AppContext);
+  const {isItemAdded, onAddFavorite, onAddToCart, isItemFavorited} = useContext(AppContext);
 
   const addHandler = () => {
-    onAdd({ id, name, img, price });
+    onAddToCart({itemid, id, name, img, price});
   };
 
   const favoriteHandler = () => {
-    onAddFavorite({ id, name, img, price });
+    onAddFavorite({itemid, id, name, img, price});
   };
 
   return (
@@ -46,7 +46,7 @@ export const Card = ({
           <div className="card-img">
             <img
               className="favorite"
-              src={isItemFavorited(id) ? "img/like.svg" : "img/favorite-unlike.svg"}
+              src={isItemFavorited(itemid) ? "img/like.svg" : "img/favorite-unlike.svg"}
               alt="like"
               onClick={favoriteHandler}
             />
@@ -68,7 +68,7 @@ export const Card = ({
               </div>
               <div className="card-text__descr-button">
                 <img
-                  src={isItemAdded(id) ? "img/add-active.svg" : "img/add.svg"}
+                  src={isItemAdded(itemid) ? "img/add-active.svg" : "img/add.svg"}
                   alt="add"
                   onClick={addHandler}
                 />

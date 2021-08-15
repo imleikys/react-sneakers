@@ -13,9 +13,9 @@ export const Main = (props) => {
       (sneaker, index) => {
         return (
           <Card
+            id={props.id}
             key={index}
             cartSneakers={props.cartSneakers}
-            onAdd={(sneaker) => props.onAddToCart(sneaker)}
             loading={props.isLoading}
             {...sneaker}
           />

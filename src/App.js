@@ -34,10 +34,11 @@ function App() {
   }, [])
 
   const onAddToCart = async (obj) => {
+    const item = cartSneakers.find(item => Number(item.itemid) === Number(obj.id));
     try {
-      if (cartSneakers.find((item) => Number(item.id) === Number(obj.id))) {
-        axios.delete(`https://610002adbca46600171cf698.mockapi.io/cards/${obj.id}`);
-        setCartSneakers((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
+      if (item) {
+        axios.delete(`https://610002adbca46600171cf698.mockapi.io/cards/${item.id}`);
+        setCartSneakers((prev) => prev.filter((item) => Number(item.itemid) !== Number(obj.id)));
       } else {
         const {data} = await axios.post('https://610002adbca46600171cf698.mockapi.io/cards', obj);
         setCartSneakers((prev) => [...prev, data]);
@@ -56,14 +57,15 @@ function App() {
     setCartSneakers((prev) => prev.filter((item) => item.id !== id));
   }
 
-  const onAddFavorite = (obj) => {
+  const onAddFavorite = async (obj) => {
     try { 
-      if (favorites.find((favObj) => favObj.id === obj.id)) {
-        axios.delete(`https://610002adbca46600171cf698.mockapi.io/favorites/${obj.id}`);
-        setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+      const item = favorites.find(item => Number(item.itemid) === Number(obj.id))
+      if (item) {
+        axios.delete(`https://610002adbca46600171cf698.mockapi.io/favorites/${item.id}`);
+        setFavorites((prev) => prev.filter((item) => Number(item.itemid) !== Number(obj.id)));
       } else {
-        axios.post('https://610002adbca46600171cf698.mockapi.io/favorites', obj);
-        setFavorites((prev) => [...prev, obj]);
+        const {data} = await axios.post('https://610002adbca46600171cf698.mockapi.io/favorites', obj);
+        setFavorites((prev) => [...prev, data]);
       }
     } catch (e) {
       alert(e);
@@ -71,19 +73,19 @@ function App() {
   }
 
   const isItemAdded = (id) => {
-    return cartSneakers.some((item) => Number(item.id) === Number(id))
+    return cartSneakers.some((item) => Number(item.itemid) === Number(id));
   }
 
   const isItemFavorited = (id) => {
-    return favorites.some((item) => Number(item.id) === Number(id));
+    return favorites.some((item) => Number(item.itemid) === Number(id));
   }
 
   return (
 
-    <AppContext.Provider value={{favorites, sneakers, cartSneakers, isItemAdded, onAddFavorite, isItemFavorited}}>
+    <AppContext.Provider value={{favorites, sneakers, cartSneakers, isItemAdded, onAddToCart, onAddFavorite, isItemFavorited, setCartOpened, setCartSneakers}}>
       <div className="wrapper">
         { 
-          cartOpened ? <Drawer items={cartSneakers} onClose={() => setCartOpened(false)} removeItem={removeItem} /> : null 
+          cartOpened ? <Drawer items={cartSneakers} removeItem={removeItem} /> : null 
         }
         <Header onClickCart={() => setCartOpened(true)} />
         
@@ -100,7 +102,7 @@ function App() {
             />
           </Route>
           <Route path='/favorites'>
-              <Favorites favorites={favorites}/>
+              <Favorites />
           </Route>
         </Switch>
       </div>

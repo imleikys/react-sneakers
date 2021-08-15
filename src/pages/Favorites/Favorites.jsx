@@ -4,7 +4,7 @@ import AppContext from "../../context";
 import './Favorites.scss';
 
 
-export const Favorites = (props) => {
+export const Favorites = () => {
 
   const state = React.useContext(AppContext);
 
@@ -20,7 +20,6 @@ export const Favorites = (props) => {
             return (
               <Card
                 key={index}
-                favorited={true}
                 {...sneaker}
               />
             );

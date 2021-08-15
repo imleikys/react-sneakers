@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import AppContext from "../../context.js";
 import { DrawerCard } from "../DrawerCard/DrawerCard.jsx";
+import { Info } from "../Info/Info.jsx";
 import "./Drawer.scss";
 
+
 export const Drawer = (props) => {
+
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
+  const {setCartOpened, setCartSneakers} = useContext(AppContext);
+
+  const orderHandler = () => {
+    setIsOrderComplete(true);
+    setCartSneakers([]);
+  };
+
   return (
     <div className="overlay">
       <div className="drawer">
@@ -13,7 +25,7 @@ export const Drawer = (props) => {
             height={32}
             src="/img/close.svg"
             alt="Close"
-            onClick={props.onClose}
+            onClick={() => setCartOpened(false)}
           />
         </div>
 
@@ -47,18 +59,17 @@ export const Drawer = (props) => {
                   <b>1074 руб. </b>
                 </li>
               </ul>
-              <button className="greenButton">
+              <button onClick={orderHandler} className="greenButton">
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
           </div>
         ) : (
-          <div className="drawer-clear">
-            <img src="/img/empty.png" alt="Clear" className="drawer-clear__img" />
-            <h2 className="drawer-clear__title">Корзина пустая</h2>
-            <p className="drawer-clear__text">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-            <button onClick={props.onClose} className="greenButton">Вернуться назад</button>
-          </div>
+          <Info
+            img={isOrderComplete ? "img/order-done.jpg" : "img/empty.png"}
+            title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
+            descr={isOrderComplete ? 'Ваш заказ скоро будет передан курьерской доставке' : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'}
+          />
         )}
       </div>
     </div>
