@@ -16,6 +16,8 @@ export const Main = (props) => {
             id={props.id}
             key={index}
             cartSneakers={props.cartSneakers}
+            onAddToCart={props.onAddToCart}
+            onAddFavorite={props.onAddFavorite}
             loading={props.isLoading}
             {...sneaker}
           />
